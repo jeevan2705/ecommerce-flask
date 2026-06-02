@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sign Up | JK Cart</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --brand: #ff6b6b;
+        --accent: #1e88e5;
+        --muted: #6b7280;
+        --bg: #f6f8fb;
+        --card-shadow: 0 12px 40px rgba(16, 24, 40, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          Arial;
+        background: var(--bg);
+        color: #0f172a;
+      }
+
+      .container-center {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 28px;
+      }
+
+      .card-signup {
+        width: 100%;
+        max-width: 920px;
+        display: grid;
+        grid-template-columns: 1fr 1.05fr;
+        gap: 0;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+        background: #fff;
+      }
+
+      .brand-side {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 107, 107, 0.06),
+          rgba(30, 136, 229, 0.03)
+        );
+        padding: 34px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+      }
+
+      .brand-icon {
+        width: 120px;
+        height: 120px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, var(--brand), #ffd166);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.08);
+      }
+
+      .brand-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #111827;
+      }
+      .brand-sub {
+        color: var(--muted);
+        font-size: 14px;
+        text-align: center;
+        max-width: 240px;
+      }
+
+      .form-side {
+        background: #fff;
+        padding: 34px 36px;
+      }
+      .form-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+      .form-head h2 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 700;
+        color: #0f172a;
+      }
+      .form-desc {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .row-sm {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      label {
+        display: block;
+        font-weight: 600;
+        font-size: 13px;
+        color: #111827;
+        margin-bottom: 6px;
+      }
+      .form-control {
+        border: 1px solid #e6e9ef;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-size: 14px;
+      }
+      .form-control:focus {
+        box-shadow: 0 6px 18px rgba(30, 136, 229, 0.08);
+        border-color: var(--accent);
+        outline: none;
+      }
+
+      .btn-primary-ic {
+        width: 100%;
+        background: linear-gradient(90deg, var(--brand), #ff8a80);
+        border: none;
+        color: #fff;
+        padding: 12px 14px;
+        border-radius: 10px;
+        font-weight: 700;
+      }
+      .btn-outline {
+        border: 1px solid #e6e9ef;
+        background: #fff;
+        padding: 10px 12px;
+        border-radius: 10px;
+        text-decoration: none;
+        color: inherit;
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .muted {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .small-link {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      /* Utility spacing classes (clearer than inline styles) */
+      .spacer-sm {
+        margin-top: 12px;
+      }
+      .spacer-md {
+        margin-top: 18px;
+      }
+      .flex-gap {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .flex-gap-sm {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      /* Responsive */
+      @media (max-width: 880px) {
+        .card-signup {
+          grid-template-columns: 1fr;
+        }
+        .brand-side {
+          display: none;
+        }
+        .form-side {
+          padding: 24px;
+        }
+        .row-sm {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="flash-messages"
+      style="
+        display: none;
+        position: fixed;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+      "
+    ></div>
+
+    <div class="container-center">
+      <div class="card-signup" role="region" aria-label="JK Cart sign up">
+        <div class="brand-side" aria-hidden="true">
+          <div class="brand-icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                d="M3 3h2l.4 2M7 13h10l3-8H6.4"
+                stroke="#fff"
+                stroke-width="1.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <circle cx="10" cy="20" r="1.6" fill="#fff" />
+              <circle cx="18" cy="20" r="1.6" fill="#fff" />
+            </svg>
+          </div>
+          <div class="brand-title">JK Cart</div>
+          <div class="brand-sub">
+            Fast, friendly shopping — create your account to start saving and
+            tracking orders.
+          </div>
+        </div>
+
+        <div class="form-side">
+          <div class="form-head">
+            <div>
+              <h2>Create your account</h2>
+              <div class="form-desc">
+                Sign up to shop on JK Cart — secure checkout and easy returns.
+              </div>
+            </div>
+            <div class="muted">
+              Already a member? <a class="small-link" href="/userlogin">Login</a>
+            </div>
+          </div>
+
+          <form method="post" action="/usercreate" novalidate>
+            <div class="row-sm">
+              <div>
+                <label for="name">Full name</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  class="form-control"
+                  placeholder="Jane Doe"
+                  required
+                />
+              </div>
+              <div>
+                <label for="phone">Phone</label>
+                <input
+                  id="phone"
+                  name="phone_no"
+                  type="tel"
+                  pattern="[0-9+\-() ]{7,20}"
+                  class="form-control"
+                  placeholder="+91 9876543210"
+                />
+              </div>
+            </div>
+
+            <div style="margin-top: 12px">
+              <label for="email">Email address</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                class="form-control"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+            <div style="margin-top: 12px">
+  <label for="address">Address</label>
+  <input
+    id="address"
+    name="address"
+    type="text"
+    class="form-control"
+    placeholder="Enter your address"
+    required
+  />
+</div>
+<div style="margin-top: 12px">
+  <label for="gender">Gender</label>
+  <select
+    id="gender"
+    name="usergender"
+    class="form-control"
+    required
+  >
+    <option value="">Select Gender</option>
+    <option value="male">male</option>
+    <option value="female">female</option>
+    <option value="others">others</option>
+  </select>
+</div>
+
+            <div class="row-sm" style="margin-top: 12px">
+              <div>
+                <label for="password">Password</label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  class="form-control"
+                  placeholder="Create a strong password"
+                  minlength="6"
+                  required
+                />
+              </div>
+              <div>
+                <label for="confirm">Confirm password</label>
+                <input
+                  id="confirm"
+                  name="confirm_password"
+                  type="password"
+                  class="form-control"
+                  placeholder="Re-enter password"
+                  minlength="6"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="spacer-sm flex-gap-sm">
+              <input id="terms" name="terms" type="checkbox" required />
+              <label for="terms" class="muted" style="margin: 0"
+                >I agree to the <a href="#" class="small-link">Terms</a> and
+                <a href="#" class="small-link">Privacy Policy</a></label
+              >
+            </div>
+
+            <div class="spacer-md flex-gap">
+              <button type="submit" class="btn-primary-ic">
+                Create account
+              </button>
+              <a class="btn-outline" href="/">Back</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // client-side confirm password check
+      (function () {
+        const form = document.querySelector("form");
+        if (!form) return;
+        form.addEventListener("submit", function (e) {
+          const p = document.getElementById("password");
+          const c = document.getElementById("confirm");
+          if (p && c && p.value !== c.value) {
+            e.preventDefault();
+            alert("Passwords do not match. Please re-enter.");
+            c.focus();
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

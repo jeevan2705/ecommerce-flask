@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - JK Cart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container-checkout {
+            max-width: 1000px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .container-checkout {
+                grid-template-columns: 1fr;
+                margin: 20px auto;
+            }
+        }
+
+        /* Order Summary Section */
+        .order-summary {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .order-summary h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #111;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .order-items {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+
+        .order-items::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .order-items::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .order-items::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .item-qty {
+            min-width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: #111;
+            margin-bottom: 4px;
+        }
+
+        .item-price-qty {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .item-subtotal {
+            font-weight: 700;
+            color: #667eea;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 20px 0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .summary-row.total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #667eea;
+            border-top: 2px solid #e5e7eb;
+            padding-top: 12px;
+            margin-top: 12px;
+        }
+
+        /* Payment Section */
+        .payment-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .payment-section h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #111;
+        }
+
+        .card-details {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            margin-bottom: 20px;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-details::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .card-chip {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-number {
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-info {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-holder, .card-expiry {
+            font-size: 0.9rem;
+        }
+
+        .test-card-info {
+            background: #f0f4ff;
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #111;
+        }
+
+        .test-card-info h5 {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #667eea;
+            font-size: 0.9rem;
+        }
+
+        .test-card-details {
+            font-size: 0.85rem;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .test-card-details code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .pay-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .pay-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        .pay-btn:active {
+            transform: translateY(0);
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+
+        .security-badge i {
+            color: #10b981;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-checkout">
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <h2><i class="fas fa-shopping-bag"></i> Order Summary</h2>
+            
+            <div class="order-items">
+                {% for item in cart_items %}
+                <div class="order-item">
+                    <div class="item-qty">{{ item.quantity }}</div>
+                    <div class="item-info">
+                        <div class="item-name">{{ item.name }}</div>
+                        <div class="item-price-qty">₹{{ item.price }} × {{ item.quantity }}</div>
+                    </div>
+                    <div class="item-subtotal">₹{{ item.subtotal|round(2) }}</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="summary-row">
+                <span>Items Total</span>
+                <span>₹{{ items_total|round(2) }}</span>
+            </div>
+            <div class="summary-row">
+                <span>Delivery Charge</span>
+                <span>₹{{ delivery|round(2) }}</span>
+            </div>
+            <div class="summary-row">
+                <span>Tax (5%)</span>
+                <span>₹{{ tax|round(2) }}</span>
+            </div>
+            <div class="summary-row total">
+                <span>Grand Total</span>
+                <span>₹{{ grand_total|round(2) }}</span>
+            </div>
+        </div>
+
+        <!-- Payment Section -->
+        <div class="payment-section">
+            <div>
+                <h3><i class="fas fa-credit-card"></i> Payment Details</h3>
+
+                <!-- Razorpay Payment Information -->
+                <div class="test-card-info">
+                    <h5><i class="fas fa-info-circle"></i> Payment Info</h5>
+                    <div class="test-card-details">
+                        <div>Complete your payment using the Razorpay checkout</div>
+                        <div style="margin-top: 8px; font-size: 0.8rem;">You can use your own test cards or any payment method available in Razorpay</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <button id="rzp-button1" class="pay-btn">
+                    <i class="fas fa-lock"></i> Pay ₹{{ grand_total|round(2) }} Securely
+                </button>
+                <div class="security-badge">
+                    <i class="fas fa-check-circle"></i>
+                    Secured by Razorpay
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        var options = {
+            "key": "rzp_test_Sjy5hYBNuv6idu",
+            "amount": "{{ order.amount }}",
+            "currency": "INR",
+            "name": "JK Cart",
+            "description": "Cart Checkout Payment",
+            "order_id": "{{ order.id }}",
+
+            "handler": function (response){
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = "/success_cart";
+
+                form.innerHTML = `
+                    <input type="hidden" name="razorpay_payment_id" value="${response.razorpay_payment_id}">
+                    <input type="hidden" name="razorpay_order_id" value="${response.razorpay_order_id}">
+                    <input type="hidden" name="razorpay_signature" value="${response.razorpay_signature}">
+                    <input type="hidden" name="grand_total" value="{{ grand_total }}">
+                    <input type="hidden" name="mode" value="{{ cart_mode }}">
+                `;
+
+                document.body.appendChild(form);
+                form.submit();
+            },
+
+            "prefill": {
+                "name": "Test User",
+                "email": "{{ session.get('user') }}",
+                "contact": "9999999999"
+            },
+
+            "theme": {
+                "color": "#667eea"
+            }
+        };
+
+        var rzp1 = new Razorpay(options);
+
+        document.getElementById('rzp-button1').onclick = function(e){
+            rzp1.open();
+            e.preventDefault();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verify OTP | JK Cart</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .otp-container {
+      width: 100%;
+      max-width: 450px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      padding: 50px 40px;
+      text-align: center;
+    }
+
+    .otp-header {
+      margin-bottom: 35px;
+    }
+
+    .brand-name {
+      font-size: 28px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-subtitle {
+      color: #666;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .otp-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #222;
+      margin-top: 25px;
+      margin-bottom: 10px;
+    }
+
+    .otp-description {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .otp-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #555;
+      display: block;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .otp-input {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 20px;
+      letter-spacing: 8px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 600;
+      color: #333;
+      transition: all 0.3s ease;
+    }
+
+    .otp-input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .otp-input::placeholder {
+      color: #bbb;
+      letter-spacing: 4px;
+    }
+
+    .btn-verify {
+      width: 100%;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-verify:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-verify:active {
+      transform: translateY(0);
+    }
+
+    .resend-section {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .resend-text {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .resend-link {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      display: inline-block;
+    }
+
+    .resend-link:hover {
+      color: #764ba2;
+      text-decoration: underline;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 600px) {
+      .otp-container {
+        padding: 35px 25px;
+      }
+
+      .otp-title {
+        font-size: 20px;
+      }
+
+      .otp-description {
+        font-size: 13px;
+      }
+
+      .otp-input {
+        font-size: 18px;
+        letter-spacing: 6px;
+        padding: 12px 12px;
+      }
+
+      .brand-name {
+        font-size: 24px;
+      }
+
+      .flash-messages {
+        left: 20px;
+        right: 20px;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main Container -->
+  <div class="otp-container">
+    <!-- Header -->
+    <div class="otp-header">
+      <div class="brand-subtitle">Welcome to</div>
+      <div class="brand-name">JK Cart</div>
+    </div>
+
+    <!-- Title & Description -->
+    <h1 class="otp-title">Verify Your Account</h1>
+    <p class="otp-description">We've sent a 6-digit verification code to your registered email. Please enter it below to complete your registration.</p>
+
+    <!-- OTP Form -->
+    <form method="post" class="otp-form">
+      <div class="form-group">
+        <label for="otp" class="otp-label">Enter OTP Code</label>
+        <input
+          type="text"
+          id="otp"
+          name="otp"
+          class="otp-input"
+          placeholder="000000"
+          maxlength="6"
+          autocomplete="one-time-code"
+          pattern="[A-Za-z0-9]{6}"
+          required
+          autofocus
+        />
+      </div>
+
+      <button type="submit" class="btn-verify">Verify & Continue</button>
+      
+    </form>
+
+    <!-- Resend Section -->
+    <div class="resend-section">
+      <p class="resend-text">Didn't receive the code?</p>
+      <a href="#" class="resend-link">Resend OTP</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const otpInput = document.getElementById('otp');
+    if (otpInput) {
+      otpInput.addEventListener('input', (e) => {
+       e.target.value = e.target.value
+.replace(/[^A-Za-z0-9]/g, '')
+.slice(0, 6);
+      });
+
+      otpInput.addEventListener('change', (e) => {
+        if (e.target.value.length === 6) {
+          // Optional: Uncomment the line below to auto-submit
+          // e.target.form.submit();
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
