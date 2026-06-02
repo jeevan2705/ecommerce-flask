@@ -13,7 +13,7 @@ import os
 import razorpay
 client=razorpay.Client(auth=("rzp_test_Sjy5hYBNuv6idu", "IHR2o3q89UEP4oZRQnzvxAtW"))
 import pdfkit
-mydb=connection.MySQLConnection(user='root',host='localhost',password='Jeevan@2705#',db='ecom23db')
+mydb=connection.MySQLConnection(host=os.getenv("MYSQLHOST"),user=os.getenv("MYSQLUSER"),password=os.getenv("MYSQLPASSWORD"),database=os.getenv("MYSQLDATABASE"),port=int(os.getenv("MYSQLPORT")))
 BASE_DIR=os.path.abspath(os.path.dirname(__file__)) # finds the exact path of app file directory
 print(BASE_DIR)
 UPLOAD_FOLDER=os.path.join(BASE_DIR,'static','uploads')
