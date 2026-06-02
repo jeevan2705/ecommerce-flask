@@ -1094,4 +1094,5 @@ def desc_item(itemid):
     else:
         return render_template('desc.html',item_data=item_data)
 
-app.run(debug=True,use_reloader=True)
+if __name__ == "__main__":
+    app.run()
